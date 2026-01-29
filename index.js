@@ -1,79 +1,71 @@
-
-//import express
+// 1. LUÔN ĐẶT DOTENV Ở DÒNG ĐẦU TIÊN
+require('dotenv').config(); 
 
 const express = require('express');
-const app = express();
-
-// import method-override 
-const methodOverride = require('method-override')
-app.use(methodOverride('_method'))
-
-// import body parser
-const  bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended: false}))
-
-// import cookie-parser and express-session 
+const methodOverride = require('method-override');
+const bodyParser = require('body-parser');
 const cookieParser = require("cookie-parser");
-const session = require("express-session")
+const session = require("express-session");
+const flash = require("express-flash");
+const path = require('path');
+const moment = require('moment');
 
-//import express-flash // noitification
-const flash = require("express-flash")
-app.use(cookieParser('keyboard cat')); // install cookieParser
-app.use(session({cookie: { maxAge: 60000 }}));// install express session
+// Import cấu hình và database
+const database = require("./config/database.js");
+const systemConfig = require("./config/system");
+
+// Import routes
+const route = require('./routes/client/index.route.js');
+const routeAdmin = require('./routes/admin/index.route.js');
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+// Kết nối database - sẽ được gọi trong hàm start()
+
+// Cấu hình Middleware
+app.use(methodOverride('_method'));
+app.use(bodyParser.urlencoded({ extended: false }));
+
+// Cấu hình Session & Flash (ĐÃ SỬA LỖI CẢNH BÁO)
+app.use(cookieParser('keyboard cat'));
+app.use(session({
+    secret: process.env.JWT_SECRET || 'binh2912', // Sử dụng secret từ .env
+    resave: false,                                   // Fix cảnh báo resave
+    saveUninitialized: true,                         // Fix cảnh báo saveUninitialized
+    cookie: { maxAge: 60000 }
+}));
 app.use(flash());
 
+// Cấu hình View Engine (Pug)
+app.set("views", `${__dirname}/views`);
+app.set("view engine", "pug");
 
-//import .evn
-require('dotenv').config(); 
-const port = process.env.PORT;
+// Static Files
+app.use(express.static(`${__dirname}/public`));
 
-// import db
-const database = require("./config/database.js")
-database.connect()
-
-//create model mongoose config objectMongo
-
-
-//import route
-const route = require('./routes/client/index.route.js');
-route(app)
-
-const routeAdmin = require('./routes/admin/index.route.js');
-routeAdmin(app)
-
-
-
-// static public folder
-app.use(express.static(`${__dirname}/public`))
-
-// import multer # upload image
-
-const multer  = require('multer')
-const upload = multer({ dest: './public/uploads/' })
-
-//pug 
-app.set("views",`${__dirname}/views`);
-app.set("view engine","pug");
-
-// App local variable
-const systemConfig = require("./config/system")
-app.locals.prefixAdmin = systemConfig.prefixAdmin
-
-// tinymce . text editer
-const path = require('path');
+// TinyMCE (Trình soạn thảo văn bản)
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
-//import moment
-const moment = require('moment')
-app.locals.moment = moment
+// Biến toàn cục cho file Pug (App Local Variables)
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
-app.get("*", (req, res)=>{
-    res.render("client/page/error/404",{
+// Sử dụng Routes
+route(app);
+routeAdmin(app);
+
+// Xử lý lỗi 404 (Luôn đặt sau cùng các route chính)
+app.get("*", (req, res) => {
+    res.render("client/page/error/404", {
         pageTitle: "404 NOT FOUND"
-    })
-})
-app.listen(port,()=>{
-    console.log(`Example app listening on port ${port}`);
+    });
+});
+
+// Chạy server
+app.listen(port, async () => {
+    await database.connect();
+    console.log(`Server is running at http://localhost:${port}`);
 });
 
 module.exports = app;

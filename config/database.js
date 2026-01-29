@@ -1,11 +1,14 @@
 const mongoose = require('mongoose');
-//init connect funciton
-module.exports.connect = async ()=>{
-    try{
-     await mongoose.connect(process.env.mongoURL);
-     console.log("Connect success")
-    }
-    catch(error){
-    console.log("Connect Error")
+
+module.exports.connect = async () => {
+    try {
+        await mongoose.connect(process.env.MONGO_URI, {
+            serverSelectionTimeoutMS: 5000, // Chỉ chờ tối đa 5 giây
+            family: 4                       // Ép dùng IPv4
+        });
+        console.log("--- KẾT NỐI DATABASE THÀNH CÔNG ---");
+    } catch (error) {
+        console.log("--- LỖI KẾT NỐI DATABASE ---");
+        console.log(error);
     }
 }
